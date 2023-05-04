@@ -1,54 +1,55 @@
 <?php
 
-class Movie {
-    public $title;
-    public $release_date;
-    public $description;
-    public $vote;
-    public $genres;
+require __DIR__ . '/Models/DB_Movie.php';
 
-    public function __construct( string $title, string $release_date, array $genres,int $vote = null, string $description = '')
-    {
-        $this->title = $title;
-        $this->release_date = $release_date;
-        $this->description = $description;
-        $this->vote = $vote;
-        $this->genres = $genres;
+require __DIR__ . '/Models/allMovieAdded.php';
 
-    }
-
-    public function getTitleFilm(){
-        return $this->title . '( vote: ' . $this->vote . ') <br />';
-    }
-
-    public function getAllGenres(){
-        $generi='';
-
-        foreach($this->genres as $genre){
-            $generi .= $genre .'<br />';
-        }
-
-        return $generi;
-
-    }
-
-}
-
-$allGenres = ['avventura','azione','fantascienza'];
+?>
 
 
-$avatar = new Movie('Avatar: The Way of Water','14/12/2022',$allGenres,4);
-var_dump($avatar);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elenco Film</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body class="bg-black text-white">
+    <div class="container">
+        <div class="row mt-4">
+            <h1 class="text-center my-4">Lista Film</h1>
+            <table class="table text-white table-bordered border-white">
+                <thead>
+                    <tr>
+                    <th scope="col">Titolo</th>
+                    <th scope="col">data di rilascio</th>
+                    <th scope="col">voto</th>
+                    <th scope="col">genere</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        foreach($movieList as $movie){ ?>
+                            <tr>
+                                <td> <?php echo $movie->title; ?></td>
+                                <td> <?php echo $movie->release_date; ?></td>
+                                <td > <?php echo $movie->vote; ?></td>
+                                <td> <?php 
+                                    foreach($allGenres as $genere){
+                                        echo $genere . ' ';
+                                    }
+                                    echo '.';
+                                ?></td>
+                            </tr>
+                     <?php   } ?>
+                </tbody>
+            </table>
+        </div>
 
-$superMario = new Movie('Super Mario : The Movie','05/04/2023',$allGenres,5);
-var_dump($superMario);
-
-$starWars = new Movie('Star Wars','18/02/2024',$allGenres);
-var_dump($superMario);
-
-
-echo $avatar->getTitleFilm();
-echo $avatar->getAllGenres();
-
-echo $superMario->getTitleFilm();
-echo $superMario->getAllGenres();
+    </div>
+    
+</body>
+</html>
